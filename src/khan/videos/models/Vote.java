@@ -10,7 +10,7 @@ import com.googlecode.objectify.Key;
 public class Vote {
 
 	@Id
-	private Long id;
+	private String id;
 	private Key<AppUser> user;
 	private Key<Video> video;
 	private String topic;
@@ -46,7 +46,7 @@ public class Vote {
 		return this.weight;
 	}
 
-	public Long getId() {
+	public String getId() {
 		return this.id;
 	}
 
@@ -54,7 +54,7 @@ public class Vote {
 	}
 
 	public Vote(AppUser user, Video video, String topic, List<String> exercises, Boolean accepted, String comment) {
-		this.id = null;
+		this.id = String.format("{%s}{%s}", user.getOpenId(), video.getYoutubeId());
 		this.user = new Key<AppUser>(AppUser.class, user.getOpenId());
 		this.video = new Key<Video>(Video.class, video.getYoutubeId());
 		this.topic = topic;
