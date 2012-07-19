@@ -1,8 +1,12 @@
 package khan.videos.models;
 
+import java.io.Serializable;
+
 import javax.persistence.Id;
 
-public class AppUser {
+public class AppUser implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	private String openId;
