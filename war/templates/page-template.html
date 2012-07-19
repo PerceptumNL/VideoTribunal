@@ -1,0 +1,45 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width">
+	<title>EduBridge</title>
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
+	<style>
+		body{
+			padding: 2px;
+			padding-top: 60px;
+		}
+	</style>
+</head>
+<body>
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<a class="brand" href="/">VideoTribunal</a>
+				<div class="nav-collapse">
+					<ul class="nav">
+						<li><a href="/tribunal">Beoordelen</a></li>
+						{% if defaults.session %}
+							<li><a href="/submit">Inzenden</a></li>
+							<li><a href="/logout">Uitloggen</a></li>
+						{% else %}
+							<li><a href="/login">Login</a></li>
+						{% endif %}
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		{% block content %}{% endblock %}
+	</div>
+	<script src="/js/lib/jquery.min.js"></script>
+	<script src="/js/lib/bootstrap.min.js"></script>
+	{% block script %}{% endblock %}
+</body>
+</html>

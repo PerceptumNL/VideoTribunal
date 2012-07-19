@@ -1,0 +1,46 @@
+ {% extends "page-template.html" %}
+
+{% block content %}
+	<div class="row">
+		<div class="span7">
+			<iframe width="540" height="360" src="http://www.youtube.com/embed/{{ video.youtubeId }}" frameborder="0" allowfullscreen></iframe>
+			{% for vote in votes %}
+				<p>{{ vote.comment }}
+			{% endfor %}
+		</div>
+		<div class="span4 offset1">
+			</p><div class="btn-group" data-toggle="buttons-radio">
+              <button class="btn btn-warning" id="btnOk">Goedkeuren</button>
+			  <button class="btn btn-warning" id="btnNo">Afkeuren</button>
+			</div></p>
+			<form method="POST">
+		      <div class="control-group">
+                <label class="control-label">Feedback</label>
+                <input type="hidden" name="youtubeId" value="{{ video.youtubeId }}"/>
+                <input type="hidden" name="status" id="inpStatus"/>
+                <div class="controls">
+                  <textarea class="input-xlarge" rows="3" name="comment" placeholder="..."></textarea>
+                </div>
+              </div>
+              <input type="submit" class="btn" id="btnSubmit" value="Bevestigen"/>
+            </form>
+          </div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block script %}
+<script>
+	$(function(){
+		$('#btnOk').click(function(){
+			$('#inpStatus').val('accepted');
+		});
+		$('#btnNo').click(function(){
+			$('#inpStatus').val('denied');
+		});
+		$('#btnSubmit').click(function(){
+			return ( $('#inpStatus').val() == "accepted") || ($('#inpStatus').val() == "denied" );
+		});
+	});
+</script>
+{% endblock %}

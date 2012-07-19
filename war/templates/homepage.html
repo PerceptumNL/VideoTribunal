@@ -1,0 +1,20 @@
+{% extends "page-template.html" %}
+
+{% block content %}
+	<div class="hero-unit">
+		<h2>Video Tribunal</h2>
+		<br/>
+		<blockquote>
+			<p>Het video beoordelingssysteem van KhanAcademie NL, goed beoordeelde videos komen
+			vanzelf op <a href="http://www.khanacademie.nl/">Khanacademie</a>. Slecht beoordeelde
+			videos krijgen feedback. Je kunt zelf je <a href="/tribunal">videos beoordelen</a> van anderen,
+			en je eigen <a href="/submit">videos inzenden</a>.</p>
+		</blockquote>
+	</div>
+		<noscript>
+          <div class="alert alert-block">
+            <h4 class="alert-heading">JavaScript staat uit!</h4>
+			Zonder JavaScript is VideoTribunal niet te gebruiken!
+          </div>
+		</noscript>
+{% endblock %}

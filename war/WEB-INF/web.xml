@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?><web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.5" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+
+	<servlet>
+		<servlet-name>Login</servlet-name>
+		<servlet-class>khan.videos.servlets.login.LoginServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Login</servlet-name>
+		<url-pattern>/login</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>Logout</servlet-name>
+		<servlet-class>khan.videos.servlets.login.LogoutServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Logout</servlet-name>
+		<url-pattern>/logout</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>SubmitVideo</servlet-name>
+		<servlet-class>khan.videos.servlets.VideoSubmitServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SubmitVideo</servlet-name>
+		<url-pattern>/submit</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>Vote</servlet-name>
+		<servlet-class>khan.videos.servlets.VoteServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Vote</servlet-name>
+		<url-pattern>/vote</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>Tribunal</servlet-name>
+		<servlet-class>khan.videos.servlets.TribunalServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Tribunal</servlet-name>
+		<url-pattern>/tribunal</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>Templates</servlet-name>
+		<servlet-class>khan.videos.servlets.templates.TemplateServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Templates</servlet-name>
+		<url-pattern>/*</url-pattern>
+	</servlet-mapping>
+
+	<welcome-file-list>
+		<welcome-file>overview</welcome-file>
+	</welcome-file-list>
+
+ <servlet>
+  <servlet-name>SystemServiceServlet</servlet-name>
+  <servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
+  <init-param>
+   <param-name>services</param-name>
+   <param-value/>
+  </init-param>
+ </servlet>
+ <servlet-mapping>
+  <servlet-name>SystemServiceServlet</servlet-name>
+  <url-pattern>/_ah/spi/*</url-pattern>
+ </servlet-mapping>
+</web-app>
