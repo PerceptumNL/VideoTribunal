@@ -15,7 +15,7 @@ public class Vote {
 	private Key<Video> video;
 	private String topic;
 	private List<String> exercises;
-	private Float weight;
+	private Double weight;
 	private String comment;
 
 	public String getComment() {
@@ -42,7 +42,7 @@ public class Vote {
 		return this.exercises;
 	}
 
-	public Float getWeight() {
+	public Double getWeight() {
 		return this.weight;
 	}
 
@@ -63,7 +63,7 @@ public class Vote {
 		this.video = new Key<Video>(Video.class, video.getYoutubeId());
 		this.topic = topic;
 		this.exercises = new ArrayList<String>(exercises);
-		this.weight = Math.min((float) (accepted ? 1 : -1) * (1 + (user.getWeightModifier() / 5)), 1);
+		this.weight = (double) Math.min((accepted ? 1 : -1) * (1 + (user.getWeightModifier() / 5)), 1D);
 		this.comment = comment;
 	}
 

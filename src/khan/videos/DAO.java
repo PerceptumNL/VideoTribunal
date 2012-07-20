@@ -23,7 +23,7 @@ public class DAO extends DAOBase {
 	public AppUser loginAppUser(User gaeuser) {
 		AppUser user = ofy().find(AppUser.class, gaeuser.getUserId());
 		if (user == null) {
-			user = new AppUser(gaeuser.getUserId(), 0);
+			user = new AppUser(gaeuser.getUserId());
 			ofy().put(user);
 		}
 		return user;

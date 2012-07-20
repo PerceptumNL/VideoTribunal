@@ -24,9 +24,9 @@ public class AppUser implements Serializable {
 		this.weightModifier = weightModifier;
 	}
 
-	public AppUser(String openId, Integer weightModifier) {
+	public AppUser(String openId) {
 		this.openId = openId;
-		this.weightModifier = weightModifier;
+		this.weightModifier = 1;
 	}
 
 	public AppUser() {
