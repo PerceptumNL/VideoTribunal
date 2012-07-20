@@ -53,8 +53,12 @@ public class Vote {
 	public Vote() {
 	}
 
+	public static String buildId(Video video, AppUser user) {
+		return String.format("{%s}{%s}", user.getOpenId(), video.getYoutubeId());
+	}
+
 	public Vote(AppUser user, Video video, String topic, List<String> exercises, Boolean accepted, String comment) {
-		this.id = String.format("{%s}{%s}", user.getOpenId(), video.getYoutubeId());
+		this.id = Vote.buildId(video, user);
 		this.user = new Key<AppUser>(AppUser.class, user.getOpenId());
 		this.video = new Key<Video>(Video.class, video.getYoutubeId());
 		this.topic = topic;
