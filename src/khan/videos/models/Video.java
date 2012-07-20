@@ -10,7 +10,7 @@ import com.googlecode.objectify.Key;
 public class Video {
 
 	public enum Status {
-		Voting, Accepted, Denied
+		Voting, Accepted, Denied;
 	}
 
 	@Id
