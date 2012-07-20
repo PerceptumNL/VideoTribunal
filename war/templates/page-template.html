@@ -25,6 +25,7 @@
 					<ul class="nav">
 						<li><a href="/tribunal">Beoordelen</a></li>
 						{% if defaults.session %}
+							<li><a href="/mytribunal">Mijn Videos</a></li>
 							<li><a href="/submit">Inzenden</a></li>
 							<li><a href="/logout">Uitloggen</a></li>
 						{% else %}
@@ -36,6 +37,11 @@
 		</div>
 	</div>
 	<div class="container">
+        {% if defaults.message.length %}
+          <div class="alert alert-block">
+            {{ defaults.message }}
+          </div>
+        {% endif %}
 		{% block content %}{% endblock %}
 	</div>
 	<script src="/js/lib/jquery.min.js"></script>

@@ -52,6 +52,8 @@ public class VideoSubmitServlet extends BaseUserServlet {
 			Video video = new Video(youtubeId, req.getRemoteAddr(), new Key<AppUser>(AppUser.class, user.getOpenId()),
 					title);
 			dao.ofy().put(video);
+		} else {
+			req.getSession().setAttribute("message", "Deze video is al door iemand anders ingezonden.");
 		}
 		resp.sendRedirect("vote?id=" + youtubeId);
 	}

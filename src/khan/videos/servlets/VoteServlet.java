@@ -53,8 +53,15 @@ public class VoteServlet extends BaseUserServlet {
 				Boolean accepted = "accepted".equals(status);
 				DAO dao = new DAO();
 				Video video = dao.ofy().get(Video.class, youtubeId);
-				dao.ofy().put(new Vote(user, video, "Topicless", new ArrayList<String>(), accepted, comment));
-				resp.sendRedirect("/tribunal?message=1");
+				Vote vote = dao.ofy().find(new Key<Vote>(Vote.class, Vote.buildId(video, user)));
+				if (vote == null) {
+					dao.ofy().put(new Vote(user, video, null, new ArrayList<String>(), accepted, comment));
+					req.getSession().setAttribute("message", "Je reactie op de video is opgeslagen, bedankt!");
+					resp.sendRedirect("/tribunal");
+				} else {
+					req.getSession().setAttribute("message", "Je hebt al een reactie op deze video geplaatst.");
+					resp.sendRedirect("/tribunal");
+				}
 			} else {
 				resp.sendRedirect("/vote?id=" + youtubeId);
 			}
