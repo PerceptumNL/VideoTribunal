@@ -5,7 +5,7 @@
 		{% for video in videos %}
 			<div class="span2">
 				<p><a href="/vote?id={{ video.youtubeId }}">
-					<img src="http://img.youtube.com/vi/{{ video.youtubeId }}/default.jpg"/>{{ video.title }}
+					<img src="http://img.youtube.com/vi/{{ video.youtubeId }}/default.jpg"/>{{ video.title }}<br/>Status:{{ video.status }}
 				</a></p>
 			</div>
 		{% endfor %}

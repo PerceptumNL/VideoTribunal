@@ -44,6 +44,19 @@
 		<servlet-name>Tribunal</servlet-name>
 		<url-pattern>/tribunal</url-pattern>
 	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Tribunal</servlet-name>
+		<url-pattern>/accepted</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>MyTribunal</servlet-name>
+		<servlet-class>khan.videos.servlets.MyTribunalServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MyTribunal</servlet-name>
+		<url-pattern>/mytribunal</url-pattern>
+	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>Templates</servlet-name>
@@ -57,6 +70,24 @@
 	<welcome-file-list>
 		<welcome-file>overview</welcome-file>
 	</welcome-file-list>
+
+	<servlet>
+		<servlet-name>CronStatus</servlet-name>
+		<servlet-class>khan.videos.servlets.CronStatusServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CronStatus</servlet-name>
+		<url-pattern>/cron/status</url-pattern>
+	</servlet-mapping>
+
+    <security-constraint>
+        <web-resource-collection>
+            <url-pattern>/cron/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>admin</role-name>
+        </auth-constraint>
+    </security-constraint>
 
  <servlet>
   <servlet-name>SystemServiceServlet</servlet-name>
