@@ -1,13 +1,30 @@
 {% extends "page-template.html" %}
 
+{% block head %}
+<style>
+	.caption {
+		height: 50px;
+		overflow: hidden;
+	}
+	.thumbnail {
+		margin-bottom: 5px;
+	}
+</style>
+{% endblock %}
+
 {% block content %}
 	<div class="row">
 		{% for video in videos %}
+		  <a href="/vote?id={{ video.youtubeId }}">
 			<div class="span2">
-				<p><a href="/vote?id={{ video.youtubeId }}">
-					<img src="http://img.youtube.com/vi/{{ video.youtubeId }}/default.jpg"/>{{ video.title }}
-				</a></p>
+		      <div class="thumbnail">
+        	    <img src="http://img.youtube.com/vi/{{ video.youtubeId }}/default.jpg"/>
+		        <div class="caption">
+                  <p>{{ video.title }}</p>
+                </div>
+              </div>
 			</div>
+		  </a>
 		{% endfor %}
 	</div>
 {% endblock %}

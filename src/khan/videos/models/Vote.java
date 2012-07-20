@@ -50,6 +50,10 @@ public class Vote {
 		return this.id;
 	}
 
+	boolean getPositive() {
+		return this.weight > 0;
+	}
+
 	public Vote() {
 	}
 

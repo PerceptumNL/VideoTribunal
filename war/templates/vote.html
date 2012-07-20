@@ -1,14 +1,22 @@
- {% extends "page-template.html" %}
+{% extends "page-template.html" %}
+
+{% block head %}
+<style>
+	.blackShadow {
+		box-shadow: 0 0 5px #000;
+	}
+</style>
+{% endblock %}
 
 {% block content %}
 	<div class="row">
 		<div class="span7">
-			<iframe width="540" height="360" src="http://www.youtube.com/embed/{{ video.youtubeId }}" frameborder="0" allowfullscreen></iframe>
+			<iframe class="blackShadow" width="540" height="360" src="http://www.youtube.com/embed/{{ video.youtubeId }}" frameborder="0" allowfullscreen></iframe>
 			{% for vote in votes %}
-				{% if vote.weight < 0 %}
-				<p>({{ vote.weight }}): {{ vote.comment }}</p>
-				{% else if vote.weight >= 0 %}
-				<p>({{ vote.weight }}): {{ vote.comment }}</p>
+				{% if vote.comment.length %}
+				<div class="alert alert-info">
+					{{ vote.comment }}
+				</div>
 				{% endif %}
 			{% endfor %}
 		</div>
@@ -19,14 +27,14 @@
 			</div></p>
 			<form method="POST">
 		      <div class="control-group">
-                <label class="control-label">Feedback</label>
+                <label class="control-label"></label>
                 <input type="hidden" name="youtubeId" value="{{ video.youtubeId }}"/>
                 <input type="hidden" name="status" id="inpStatus"/>
                 <div class="controls">
-                  <textarea class="input-xlarge" rows="3" name="comment" placeholder="..."></textarea>
+                  <textarea class="input-xlarge" rows="3" name="comment" placeholder="Feedback"></textarea>
                 </div>
               </div>
-              <input type="submit" class="btn" id="btnSubmit" value="Bevestigen"/>
+              <input type="submit" class="btn" id="btnSubmit" disabled="" value="Bevestigen"/>
             </form>
           </div>
 		</div>
@@ -38,9 +46,11 @@
 	$(function(){
 		$('#btnOk').click(function(){
 			$('#inpStatus').val('accepted');
+			$('#btnSubmit').removeAttr('disabled');
 		});
 		$('#btnNo').click(function(){
 			$('#inpStatus').val('denied');
+			$('#btnSubmit').removeAttr('disabled');
 		});
 		$('#btnSubmit').click(function(){
 			return ( $('#inpStatus').val() == "accepted") || ($('#inpStatus').val() == "denied" );
