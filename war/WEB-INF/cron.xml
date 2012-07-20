@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<cronentries>
-  <cron>
-    <url>/cron/status</url>
-    <description>Set status of videos depending on votes, change user weights.</description>
-    <schedule>every 50 minutes</schedule>
-  </cron>
-</cronentries>
