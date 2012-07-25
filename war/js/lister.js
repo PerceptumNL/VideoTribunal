@@ -18,6 +18,7 @@ function TreeLoaded(){
 	// --- Display Course Topics
 	selectCourse.change(function(data){
 		selectTopic.find('option').not('[data-nodelete]').remove();
+		selectExercise.find('option').not('[data-nodelete]').remove();
 		var map = getTreeTopics(selectCourse.val());
 		for(i in map){
 			selectTopic.append('<option value="' + i + '">' + map[i] + '</option>');
