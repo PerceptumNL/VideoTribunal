@@ -21,15 +21,27 @@
 			{% endfor %}
 		</div>
 		<div class="span4 offset1">
-			</p><div class="btn-group" data-toggle="buttons-radio">
+		  <div id="feedbackForm" class="hide">
+		 	<div class="btn-group" data-toggle="buttons-radio">
               <button class="btn btn-warning" id="btnOk">Goedkeuren</button>
 			  <button class="btn btn-warning" id="btnNo">Afkeuren</button>
-			</div></p>
+			</div>
 			<form method="POST">
 		      <div class="control-group">
                 <label class="control-label"></label>
                 <input type="hidden" name="youtubeId" value="{{ video.youtubeId }}"/>
                 <input type="hidden" name="status" id="inpStatus"/>
+                <div id="selectors">
+	                <select name="course">
+    	            	<option value="" data-nodelete="">Vak</option>
+        	        </select>
+            	    <select name="topic">
+                		<option value="" data-nodelete="">Onderdeel</option>
+            	    </select>
+        	        <select name="exercise">
+    	            	<option value="" data-nodelete="">Oefening</option>
+ 	               </select>
+ 	            </div>
                 <div class="controls">
                   <textarea class="input-xlarge" rows="3" name="comment" placeholder="Feedback"></textarea>
                 </div>
@@ -37,7 +49,10 @@
               <input type="submit" class="btn" id="btnSubmit" disabled="" value="Bevestigen"/>
             </form>
           </div>
-		</div>
+          <div id="errorMessage" class=" alert alert-error hide">
+          	<h4>Whoops</h4><p>Het lijkt er op dat er iets mis is gegaan tijdens het ophalen van de vakken, onderdelen en oefeningen. Misschien is Khanacademie NL offline.<br/>Kom later terug, bedankt voor het beoordelen!</p>
+          </div>
+        </div>
 	</div>
 {% endblock %}
 

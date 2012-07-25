@@ -1,15 +1,46 @@
 
-var TreeKey = "TopicTree";
+var TreeKey = 'TopicTree';
 var Tree = null;
 
-// Show form - Display topics
 function TreeLoaded(){
-	// ...
+	$('#feedbackForm').show();
+
+	var selectCourse = $('select[name="course"]');
+	var selectTopic = $('select[name="topic"]');
+	var selectExercise = $('select[name="exercise"]');
+
+	// --- Display Courses
+	var map = getTopicMap(Tree);
+	for(i in map){
+		selectCourse.append('<option value="' + i + '">' + map[i] + '</option>');
+	}
+
+	// --- Display Course Topics
+	selectCourse.change(function(data){
+		// Empty
+		selectTopic.find('option').not('[data-nodelete]').remove();
+		// Add
+		var map = getTreeTopics(selectCourse.val());
+		for(i in map){
+			selectTopic.append('<option value="' + i + '">' + map[i] + '</option>');
+		}
+	});
+
+	// --- Display Topic Exercises
+	selectTopic.change(function(data){
+		// Empty
+		selectExercise.find('option').not('[data-nodelete]').remove();
+		// Add
+		var map = getTreeExercises(selectCourse.val(), selectTopic.val());
+		for(i in map){
+			selectExercise.append('<option value="' + i + '">' + map[i] + '</option>');
+		}
+	});
+
 }
 
-// Hide form - Display error message
 function TreeError(){
-	// ...
+	$("#errorMessage").show();
 }
 
 // -- Topic Navigation -----------------
@@ -42,10 +73,6 @@ function getExerciseMap(topic){
 }
 
 // -- Topic Tree Utilities ---------------
-
-function getTreeCourses(){
-	return getTopicMap(Tree);
-}
 
 function getTreeTopics(courseId){
 	var course = getTopicChild(Tree, courseId);
