@@ -54,7 +54,7 @@ public class Vote {
 	}
 
 	public static String buildId(Video video, AppUser user) {
-		return String.format("{%s}{%s}", user.getOpenId(), video.getYoutubeId());
+		return String.format("{%s}{%s}", video.getYoutubeId(), user.getOpenId());
 	}
 
 	public Vote(AppUser user, Video video, String topic, List<String> exercises, Boolean accepted, String comment) {
