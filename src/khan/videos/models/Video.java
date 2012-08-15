@@ -1,5 +1,6 @@
 package khan.videos.models;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -7,10 +8,12 @@ import javax.persistence.Id;
 
 import com.googlecode.objectify.Key;
 
-public class Video {
+public class Video implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	public enum Status {
-		Voting, Accepted, Denied;
+		Voting, Accepted, Denied
 	}
 
 	@Id
@@ -18,19 +21,17 @@ public class Video {
 	private Date submitted;
 	private String submitIPAddress;
 	private Key<AppUser> user;
-	private Status status;
+	private Key<Topic> topic;
+	// TODO: Load from YouTube
 	private String title;
+	private Status status;
+
+	public Key<Topic> getTopic() {
+		return this.topic;
+	}
 
 	public String getTitle() {
 		return this.title;
-	}
-
-	public Status getStatus() {
-		return this.status;
-	}
-
-	public void setStatus(Status status) {
-		this.status = status;
 	}
 
 	public String getYoutubeId() {
@@ -49,13 +50,22 @@ public class Video {
 		return this.user;
 	}
 
-	public Video(String youtubeId, String submitIPAddress, Key<AppUser> user, String title) {
+	public Status getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
+	public Video(String youtubeId, String submitIPAddress, Key<AppUser> user, Key<Topic> topic, String title) {
+		this.topic = topic;
 		this.youtubeId = youtubeId;
 		this.submitted = Calendar.getInstance().getTime();
 		this.submitIPAddress = submitIPAddress;
 		this.user = user;
-		this.status = Video.Status.Voting;
 		this.title = title;
+		this.status = Status.Voting;
 	}
 
 	public Video() {

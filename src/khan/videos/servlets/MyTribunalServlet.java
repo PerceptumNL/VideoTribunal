@@ -17,7 +17,7 @@ public class MyTribunalServlet extends BaseUserServlet {
 
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp, AppUser user) throws IOException {
-		DAO dao = new DAO();
+		DAO dao = DAO.get();
 		List<Video> videos = dao.ofy().query(Video.class).filter("user", user).order("submitted").list();
 		Templater templater = new Templater();
 		templater.put("videos", videos);

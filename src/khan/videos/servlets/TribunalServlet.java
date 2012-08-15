@@ -20,7 +20,7 @@ public class TribunalServlet extends HttpServlet {
 
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-		DAO dao = new DAO();
+		DAO dao = DAO.get();
 		String requestTribunal = req.getServletPath();
 		List<Video> videos = null;
 		if (requestTribunalVoting.equals(requestTribunal)) {

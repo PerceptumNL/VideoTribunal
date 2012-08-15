@@ -15,7 +15,7 @@ import khan.videos.servlets.templates.Templater;
 import com.googlecode.objectify.Key;
 
 @SuppressWarnings("serial")
-public class VideoSubmitServlet extends BaseUserServlet {
+public class VideoServlet extends BaseUserServlet {
 
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp, AppUser user) throws IOException {
@@ -46,11 +46,12 @@ public class VideoSubmitServlet extends BaseUserServlet {
 			return;
 		}
 		// Check for existing, then create new.
-		DAO dao = new DAO();
+		DAO dao = DAO.get();
 		Video existing = dao.ofy().find(Video.class, youtubeId);
 		if (existing == null) {
-			Video video = new Video(youtubeId, req.getRemoteAddr(), new Key<AppUser>(AppUser.class, user.getOpenId()),
-					title);
+			// TODO: Get topic from request
+			Video video = new Video(youtubeId, req.getRemoteAddr(), new Key<AppUser>(AppUser.class, user.getId()),
+					null, title);
 			dao.ofy().put(video);
 		} else {
 			req.getSession().setAttribute("message", "Deze video is al door iemand anders ingezonden.");

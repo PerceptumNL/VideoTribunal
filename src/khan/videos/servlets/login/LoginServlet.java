@@ -20,11 +20,10 @@ import com.google.appengine.api.users.UserServiceFactory;
 public class LoginServlet extends HttpServlet {
 
 	@Override
-	public void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws IOException {
+	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		UserService userService = UserServiceFactory.getUserService();
 		if (userService.isUserLoggedIn()) {
-			DAO dao = new DAO();
+			DAO dao = DAO.get();
 			AppUser appUser = dao.loginAppUser(userService.getCurrentUser());
 			HttpSession session = req.getSession(true);
 			session.setAttribute("AppUser", appUser);
@@ -39,8 +38,7 @@ public class LoginServlet extends HttpServlet {
 				url.append('?');
 				url.append(queryString);
 			}
-			resp.sendRedirect(userService.createLoginURL(url.toString(), null,
-					"gmail.com", null));
+			resp.sendRedirect(userService.createLoginURL(url.toString(), null, "gmail.com", null));
 		}
 	}
 

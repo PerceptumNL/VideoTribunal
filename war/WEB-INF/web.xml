@@ -20,7 +20,7 @@
 
 	<servlet>
 		<servlet-name>SubmitVideo</servlet-name>
-		<servlet-class>khan.videos.servlets.VideoSubmitServlet</servlet-class>
+		<servlet-class>khan.videos.servlets.VideoServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>SubmitVideo</servlet-name>
@@ -29,7 +29,7 @@
 
 	<servlet>
 		<servlet-name>Vote</servlet-name>
-		<servlet-class>khan.videos.servlets.VoteServlet</servlet-class>
+		<servlet-class>khan.videos.servlets.VoteQualityServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>Vote</servlet-name>
