@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import khan.videos.DAO;
-import khan.videos.models.AppUser;
 import khan.videos.models.Topic;
 import khan.videos.servlets.login.BaseUserServlet;
 
@@ -25,12 +24,6 @@ public class TopicServlet extends BaseUserServlet {
 		Gson gson = new Gson();
 		resp.setContentType("application/json");
 		resp.getOutputStream().print(gson.toJson(topics));
-
-	}
-
-	// TODO: Add new Topic
-	@Override
-	public void doPost(HttpServletRequest req, HttpServletResponse resp, AppUser user) throws IOException {
 	}
 
 }
