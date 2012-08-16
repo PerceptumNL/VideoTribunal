@@ -22,9 +22,12 @@ public class VideoStorageTest {
 		dao.addVideo(new Video("YOUTUBEID0", "127.0.0.1", null, null, "Title"));
 		dao.addVideo(new Video("YOUTUBEID1", "127.0.0.1", null, null, "Title"));
 		dao.addVideo(new Video("YOUTUBEID2", "127.0.0.1", null, null, "Title"));
+		// Add the same videos again
+		dao.addVideo(new Video("YOUTUBEID2", "127.0.0.1", null, null, "Title"));
 		// Videos: Root
 		{
 			List<Video> videos = dao.getTopicVideos(null);
+			assertEquals(videos.size(), 3);
 			assertEquals(videos.get(0).getYoutubeId(), "YOUTUBEID0");
 			assertEquals(videos.get(1).getYoutubeId(), "YOUTUBEID1");
 			assertEquals(videos.get(2).getYoutubeId(), "YOUTUBEID2");
