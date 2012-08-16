@@ -119,8 +119,7 @@ public class DAO extends DAOBase {
 	public List<Video> getTopicVideos(String parent) {
 		List<Video> children = (List<Video>) memcache.get(DAO.makeTopicVideosKey(parent));
 		if (children == null) {
-			children = this.ofy().query(Video.class).list();// .filter("topic",
-															// parent).list();
+			children = this.ofy().query(Video.class).filter("topic", parent).list();
 			if (children == null) {
 				children = new ArrayList<Video>();
 			}
@@ -128,4 +127,5 @@ public class DAO extends DAOBase {
 		}
 		return children == null ? new ArrayList<Video>() : children;
 	}
+
 }

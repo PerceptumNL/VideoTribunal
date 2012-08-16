@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import khan.videos.DAO;
+import khan.videos.YoutubeHelper;
 import khan.videos.models.AppUser;
 import khan.videos.models.Video;
 import khan.videos.servlets.login.BaseUserServlet;
@@ -30,7 +31,6 @@ public class VideoServlet extends BaseUserServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp, AppUser user) throws IOException {
 		// Check for youtube url
 		String url = req.getParameter("yt-id");
-		String title = req.getParameter("title");
 		if (url == null || url.startsWith("http://youtu.be/") == false) {
 			resp.sendRedirect("/submit?message=" + URLEncoder.encode("Vul AUB een youtu.be share URL in.", "UTF-8"));
 			return;
@@ -40,16 +40,18 @@ public class VideoServlet extends BaseUserServlet {
 			resp.sendRedirect("/submit?message=" + URLEncoder.encode("Vul AUB een youtu.be share URL in.", "UTF-8"));
 			return;
 		}
-		if (title == null || title.length() < 5) {
+		String title = YoutubeHelper.getTitle(youtubeId);
+		if (title == null) {
 			resp.sendRedirect("/submit?message="
-					+ URLEncoder.encode("Vul AUB een titel in van minimaal 5 karakters.", "UTF-8"));
+					+ URLEncoder
+							.encode("Het is niet gelukt om gegevens van youtube op te halen over deze video - Let er goed op dat de Id code klopt.",
+									"UTF-8"));
 			return;
 		}
 		// Check for existing, then create new.
 		DAO dao = DAO.get();
 		Video existing = dao.ofy().find(Video.class, youtubeId);
 		if (existing == null) {
-			// TODO: Get topic from request
 			Video video = new Video(youtubeId, req.getRemoteAddr(), new Key<AppUser>(AppUser.class, user.getId()),
 					null, title);
 			dao.ofy().put(video);

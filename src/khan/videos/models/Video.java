@@ -22,9 +22,9 @@ public class Video implements Serializable {
 	private Date submitted;
 	@Transient
 	private String submitIPAddress;
+	@Transient
 	private Key<AppUser> user;
 	private Key<Topic> topic;
-	// TODO: Load from YouTube
 	private String title;
 	private Status status;
 

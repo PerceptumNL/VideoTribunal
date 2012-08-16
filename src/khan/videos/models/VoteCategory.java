@@ -35,8 +35,19 @@ public class VoteCategory implements Serializable {
 		return this.id;
 	}
 
-	public static String buildId(Topic topic, Video video, AppUser user) {
+	private static String buildId(Topic topic, Video video, AppUser user) {
 		return String.format("%s:%s:%s", video.getYoutubeId(), user.getId(), topic.getName());
+	}
+
+	private static String buildId(String topic, String video, String user) {
+		return String.format("%s:%s:%s", video, user, topic);
+	}
+
+	public VoteCategory(String userId, String videoId, String topicId) {
+		this.id = VoteCategory.buildId(topicId, videoId, userId);
+		this.user = new Key<AppUser>(AppUser.class, userId);
+		this.video = new Key<Video>(Video.class, videoId);
+		this.topic = new Key<Topic>(Topic.class, topicId);
 	}
 
 	public VoteCategory(AppUser user, Video video, Topic topic) {

@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 import com.googlecode.objectify.Key;
 
@@ -15,8 +16,10 @@ public class Topic implements Serializable {
 	@Id
 	private String name;
 	// Creation data
+	@Transient
 	private AppUser user;
 	private Date created;
+	@Transient
 	private Key<Topic> parent = null;
 
 	public Key<Topic> getParent() {
