@@ -1,5 +1,6 @@
 package khan.videos;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import khan.videos.models.AppUser;
@@ -11,7 +12,6 @@ import khan.videos.models.VoteQuality;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
 import com.google.appengine.api.users.User;
-import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.util.DAOBase;
 
@@ -53,30 +53,36 @@ public class DAO extends DAOBase {
 
 	// -- Topic -------------------------------------------
 
-	private static String makeTopicChildrenKey(Topic topic) {
-		return String.format("TopicChildren/%s", topic.getName() == null ? "" : topic.getName());
+	private static String makeTopicChildrenKey(String topic) {
+		return String.format("TopicChildren/%s", topic == null ? "" : topic);
 	}
 
-	// TODO: Test
 	public void addTopic(Topic topic) {
 		this.ofy().put(topic);
 		// Edit children list of topic's parent
-		Topic parent = topic.getParent();
-		List<Topic> topics = this.getTopicChildren(parent);
+		String parentName = topic.getParent() == null ? null : topic.getParent().getName();
+		List<Topic> topics = this.getTopicChildren(parentName);
+		for (Topic child : topics) {
+			if (child.getName().equals(topic.getName())) {
+				return;
+			}
+		}
 		topics.add(topic);
-		memcache.put(DAO.makeTopicChildrenKey(parent), topics);
+		memcache.put(DAO.makeTopicChildrenKey(parentName), topics);
 	}
 
 	/**
 	 * @param parent
 	 *            if null: returns topics without parent ( "root topics" )
 	 */
-	// TODO: Test with and without parent
 	@SuppressWarnings("unchecked")
-	public List<Topic> getTopicChildren(Topic parent) {
+	public List<Topic> getTopicChildren(String parent) {
 		List<Topic> children = (List<Topic>) memcache.get(DAO.makeTopicChildrenKey(parent));
 		if (children == null) {
-			this.ofy().query(Topic.class).filter("parent", parent);
+			children = this.ofy().query(Topic.class).filter("parent", parent).list();
+			if (children == null) {
+				children = new ArrayList<Topic>();
+			}
 			memcache.put(DAO.makeTopicChildrenKey(parent), children);
 		}
 		return children;
@@ -84,19 +90,24 @@ public class DAO extends DAOBase {
 
 	// -- Videos ------------------------------------------
 
-	private static String makeTopicVideosKey(Topic topic) {
-		return String.format("TopicVideos/%s", topic.getName() == null ? "" : topic.getName());
+	private static String makeTopicVideosKey(String topic) {
+		return String.format("TopicVideos/%s", topic == null ? "" : topic);
 	}
 
 	// TODO: Test
 	public void addVideo(Video video) {
 		this.ofy().put(video);
 		// Edit children list of video's parent
-		Key<Topic> parentKey = video.getTopic();
-		Topic parent = this.ofy().get(parentKey);
-		List<Video> videos = this.getTopicVideos(parent);
+		String parentName = video.getTopic() == null ? null : video.getTopic().getName();
+		List<Video> videos = this.getTopicVideos(parentName);
+		// Check if already in list
+		for (Video child : videos) {
+			if (child.getYoutubeId().equals(video.getYoutubeId())) {
+				return;
+			}
+		}
 		videos.add(video);
-		memcache.put(DAO.makeTopicVideosKey(parent), videos);
+		memcache.put(DAO.makeTopicVideosKey(parentName), videos);
 	}
 
 	/**
@@ -105,13 +116,16 @@ public class DAO extends DAOBase {
 	 */
 	// TODO: Test with and without parent
 	@SuppressWarnings("unchecked")
-	public List<Video> getTopicVideos(Topic parent) {
+	public List<Video> getTopicVideos(String parent) {
 		List<Video> children = (List<Video>) memcache.get(DAO.makeTopicVideosKey(parent));
 		if (children == null) {
-			this.ofy().query(Video.class).filter("topic", parent);
+			children = this.ofy().query(Video.class).list();// .filter("topic",
+															// parent).list();
+			if (children == null) {
+				children = new ArrayList<Video>();
+			}
 			memcache.put(DAO.makeTopicVideosKey(parent), children);
 		}
-		return children;
+		return children == null ? new ArrayList<Video>() : children;
 	}
-
 }

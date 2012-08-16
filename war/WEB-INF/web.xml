@@ -59,6 +59,24 @@
 	</servlet-mapping>
 
 	<servlet>
+		<servlet-name>TopicServlet</servlet-name>
+		<servlet-class>khan.videos.servlets.api.TopicServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TopicServlet</servlet-name>
+		<url-pattern>/api/topic</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>VideoServlet</servlet-name>
+		<servlet-class>khan.videos.servlets.api.VideoServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>VideoServlet</servlet-name>
+		<url-pattern>/api/video</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
 		<servlet-name>Templates</servlet-name>
 		<servlet-class>khan.videos.servlets.templates.TemplateServlet</servlet-class>
 	</servlet>
@@ -71,25 +89,26 @@
 		<welcome-file>overview</welcome-file>
 	</welcome-file-list>
 
-    <security-constraint>
-        <web-resource-collection>
-            <url-pattern>/admin/*</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-            <role-name>admin</role-name>
-        </auth-constraint>
-    </security-constraint>
+	<security-constraint>
+		<web-resource-collection>
+			<url-pattern>/admin/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>admin</role-name>
+		</auth-constraint>
+	</security-constraint>
 
- <servlet>
-  <servlet-name>SystemServiceServlet</servlet-name>
-  <servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
-  <init-param>
-   <param-name>services</param-name>
-   <param-value/>
-  </init-param>
- </servlet>
- <servlet-mapping>
-  <servlet-name>SystemServiceServlet</servlet-name>
-  <url-pattern>/_ah/spi/*</url-pattern>
- </servlet-mapping>
+	<servlet>
+		<servlet-name>SystemServiceServlet</servlet-name>
+		<servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
+		<init-param>
+			<param-name>services</param-name>
+			<param-value/>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SystemServiceServlet</servlet-name>
+		<url-pattern>/_ah/spi/*</url-pattern>
+	</servlet-mapping>
+
 </web-app>

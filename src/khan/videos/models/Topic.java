@@ -6,6 +6,8 @@ import java.util.Date;
 
 import javax.persistence.Id;
 
+import com.googlecode.objectify.Key;
+
 public class Topic implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -15,9 +17,9 @@ public class Topic implements Serializable {
 	// Creation data
 	private AppUser user;
 	private Date created;
-	private Topic parent = null;
+	private Key<Topic> parent = null;
 
-	public Topic getParent() {
+	public Key<Topic> getParent() {
 		return this.parent;
 	}
 
@@ -36,8 +38,15 @@ public class Topic implements Serializable {
 	public Topic() {
 	}
 
-	public Topic(String name, AppUser user, Topic parent) {
+	public Topic(String name, AppUser user, Key<Topic> parent) {
 		this.parent = parent;
+		this.name = name;
+		this.user = user;
+		this.created = Calendar.getInstance().getTime();
+	}
+
+	public Topic(String name, AppUser user, Topic parent) {
+		this.parent = parent == null ? null : new Key<Topic>(Topic.class, parent.getName());
 		this.name = name;
 		this.user = user;
 		this.created = Calendar.getInstance().getTime();

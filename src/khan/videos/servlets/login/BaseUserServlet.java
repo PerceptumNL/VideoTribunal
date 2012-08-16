@@ -17,8 +17,7 @@ import khan.videos.models.AppUser;
 public class BaseUserServlet extends HttpServlet {
 
 	@Override
-	public final void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws IOException {
+	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		HttpSession session = req.getSession();
 		if (session != null) {
 			AppUser user = (AppUser) session.getAttribute("AppUser");
@@ -31,8 +30,7 @@ public class BaseUserServlet extends HttpServlet {
 	}
 
 	@Override
-	public final void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws IOException {
+	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		HttpSession session = req.getSession();
 		if (session != null) {
 			AppUser user = (AppUser) session.getAttribute("AppUser");
@@ -44,15 +42,13 @@ public class BaseUserServlet extends HttpServlet {
 		resp.sendRedirect(BaseUserServlet.createLoginURL(req));
 	}
 
-	public void doGet(HttpServletRequest req, HttpServletResponse resp,
-			AppUser user) throws IOException {
+	public void doGet(HttpServletRequest req, HttpServletResponse resp, AppUser user) throws IOException {
 		// To be implemented by subclasses.
 		resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
 		resp.getOutputStream().print("GET not implemented.");
 	}
 
-	public void doPost(HttpServletRequest req, HttpServletResponse resp,
-			AppUser user) throws IOException {
+	public void doPost(HttpServletRequest req, HttpServletResponse resp, AppUser user) throws IOException {
 		// To be implemented by subclasses.
 		resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
 		resp.getOutputStream().print("POST not implemented.");
@@ -62,8 +58,7 @@ public class BaseUserServlet extends HttpServlet {
 	 * Creates login URL, user will be redirected to request upon login
 	 * complete.
 	 */
-	public static String createLoginURL(HttpServletRequest req)
-			throws IOException {
+	public static String createLoginURL(HttpServletRequest req) throws IOException {
 		StringBuffer url = req.getRequestURL();
 		String queryString = req.getQueryString();
 		if (queryString != null) {
