@@ -24,6 +24,8 @@ public class DAOTest {
 		dao.addTopic(root);
 		dao.addTopic(new Topic("Child1", null, root));
 		dao.addTopic(new Topic("Child2", null, root));
+		// Add the same topic again
+		dao.addTopic(new Topic("Child2", null, root));
 		// Topic: Root
 		{
 			List<Topic> topics = dao.getTopicChildren(null);
@@ -32,6 +34,7 @@ public class DAOTest {
 		// Topics: Children
 		{
 			List<Topic> topics = dao.getTopicChildren("Root");
+			assertEquals(topics.size(), 2);
 			assertEquals(topics.get(0).getName(), "Child1");
 			assertEquals(topics.get(1).getName(), "Child2");
 		}
