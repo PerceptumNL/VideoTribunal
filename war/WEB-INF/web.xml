@@ -51,7 +51,7 @@
 
 	<servlet>
 		<servlet-name>MyTribunal</servlet-name>
-		<servlet-class>khan.videos.servlets.MyTribunalServlet</servlet-class>
+		<servlet-class>khan.videos.servlets.OverviewServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>MyTribunal</servlet-name>

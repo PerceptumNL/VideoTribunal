@@ -1,0 +1,53 @@
+{% extends "page-template.html" %}
+
+{% block head %}
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.min.js"></script>
+	<script src="/js/treeview.js"></script>
+{% endblock %}
+
+{% block content %}
+	{% if defaults.session %}{% else %}
+		<div class="hero-unit">
+			<blockquote>
+				<p>Het video beoordelingssysteem van KhanAcademie NL, goed beoordeelde video's komen
+				vanzelf op <a href="http://www.khanacademie.nl/">Khanacademie</a>. Slecht beoordeelde
+				video's krijgen feedback. Je kunt videos beoordelen, en je eigen videos inzenden.</p>
+			</blockquote>
+		</div>
+	{% endif %}
+	<noscript>
+		<div class="alert alert-block">
+		<h4 class="alert-heading">JavaScript staat uit!</h4>
+		Zonder JavaScript is VideoTribunal niet te gebruiken!
+		</div>
+	</noscript>
+	<div class="row" ng-app="TreeView" ng-controller="TreeController">
+		<div class="span12">
+			<ul class="breadcrumb">
+				<li ng-repeat="data in stack">
+					<a ng-click="resetTopic(data, $index)">{\{ data.name || "Home" }}</a>
+					<span class="divider">/</span>
+				</li>
+			</ul>
+		</div>
+		<div class="span3">
+			<ul class="well nav nav-list">
+				 <li ng-repeat="data in topics">
+					<a ng-click="setTopic(data)">
+						{\{ data.name }}
+					</a>
+				</li>
+			</ul>
+		</div>
+		<div class="span9">
+			<ul class="nav nav-list">
+				<li ng-repeat="data in videos">
+					<a href="/vote?id={\{ data.youtubeId }}" target="_blank">
+						{\{ data.title }}
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+{% endblock %}

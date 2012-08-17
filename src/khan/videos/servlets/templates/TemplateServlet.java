@@ -18,16 +18,15 @@ public class TemplateServlet extends HttpServlet {
 
 	{
 		// Templates for guests only
-		guestTemplates.put("/", "homepage.html");
-		guestTemplates.put("/home", "homepage.html");
+		guestTemplates.put("/", "home.html");
+		guestTemplates.put("/home", "home.html");
 		// Templates logged in users can view
 		userTemplates.putAll(guestTemplates);
 		userTemplates.put("/overview", "overview-khan.html");
 	}
 
 	@Override
-	public void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws IOException {
+	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		Templater templater = new Templater();
 		String uri = req.getRequestURI();
 		if (req.getSession(false) == null) {

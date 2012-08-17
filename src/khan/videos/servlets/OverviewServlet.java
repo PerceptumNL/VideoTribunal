@@ -13,7 +13,7 @@ import khan.videos.servlets.login.BaseUserServlet;
 import khan.videos.servlets.templates.Templater;
 
 @SuppressWarnings("serial")
-public class MyTribunalServlet extends BaseUserServlet {
+public class OverviewServlet extends BaseUserServlet {
 
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp, AppUser user) throws IOException {

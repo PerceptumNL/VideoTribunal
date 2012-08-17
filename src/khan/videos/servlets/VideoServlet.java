@@ -54,7 +54,7 @@ public class VideoServlet extends BaseUserServlet {
 		if (existing == null) {
 			Video video = new Video(youtubeId, req.getRemoteAddr(), new Key<AppUser>(AppUser.class, user.getId()),
 					null, title);
-			dao.ofy().put(video);
+			dao.addVideo(video);
 		} else {
 			req.getSession().setAttribute("message", "Deze video is al door iemand anders ingezonden.");
 		}

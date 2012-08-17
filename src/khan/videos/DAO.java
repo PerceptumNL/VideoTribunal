@@ -12,6 +12,7 @@ import khan.videos.models.VoteQuality;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
 import com.google.appengine.api.users.User;
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.util.DAOBase;
 
@@ -79,7 +80,8 @@ public class DAO extends DAOBase {
 	public List<Topic> getTopicChildren(String parent) {
 		List<Topic> children = (List<Topic>) memcache.get(DAO.makeTopicChildrenKey(parent));
 		if (children == null) {
-			children = this.ofy().query(Topic.class).filter("parent", parent).list();
+			Key<Topic> parentKey = parent == null ? null : new Key<Topic>(Topic.class, parent);
+			children = this.ofy().query(Topic.class).filter("parent", parentKey).list();
 			if (children == null) {
 				children = new ArrayList<Topic>();
 			}
@@ -94,7 +96,6 @@ public class DAO extends DAOBase {
 		return String.format("TopicVideos/%s", topic == null ? "" : topic);
 	}
 
-	// TODO: Test
 	public void addVideo(Video video) {
 		this.ofy().put(video);
 		// Edit children list of video's parent
@@ -119,7 +120,8 @@ public class DAO extends DAOBase {
 	public List<Video> getTopicVideos(String parent) {
 		List<Video> children = (List<Video>) memcache.get(DAO.makeTopicVideosKey(parent));
 		if (children == null) {
-			children = this.ofy().query(Video.class).filter("topic", parent).list();
+			Key<Video> parentKey = parent == null ? null : new Key<Video>(Video.class, parent);
+			children = this.ofy().query(Video.class).filter("topic", parentKey).list();
 			if (children == null) {
 				children = new ArrayList<Video>();
 			}
