@@ -37,24 +37,11 @@
 	</servlet-mapping>
 
 	<servlet>
-		<servlet-name>Tribunal</servlet-name>
-		<servlet-class>khan.videos.servlets.TribunalServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>Tribunal</servlet-name>
-		<url-pattern>/tribunal</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>Tribunal</servlet-name>
-		<url-pattern>/accepted</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>MyTribunal</servlet-name>
+		<servlet-name>OverviewSumitted</servlet-name>
 		<servlet-class>khan.videos.servlets.OverviewServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>MyTribunal</servlet-name>
+		<servlet-name>OverviewSumitted</servlet-name>
 		<url-pattern>/mytribunal</url-pattern>
 	</servlet-mapping>
 
