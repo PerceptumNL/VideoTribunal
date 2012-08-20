@@ -1,38 +1,69 @@
 {% extends "page-template.html" %}
 
-{% block head %}
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+{% block script %}
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.min.js"></script>
 	<script src="/js/treeview.js"></script>
+	<script>
+		// -- Tooltips --------------------------
+		$("a[rel=tooltip]").tooltip({
+			placement: "bottom"
+		});
+	</script>
 {% endblock %}
 
 {% block content %}
-	{% if defaults.session %}{% else %}
-		<div class="hero-unit">
-			<blockquote>
-				<p>Het video beoordelingssysteem van KhanAcademie NL, goed beoordeelde video's komen
-				vanzelf op <a href="http://www.khanacademie.nl/">Khanacademie</a>. Slecht beoordeelde
-				video's krijgen feedback. Je kunt videos beoordelen, en je eigen videos inzenden.</p>
-			</blockquote>
+
+	<div class="row">
+		<div class="span10 offset1">
+
+			{% if defaults.session %}{% else %}
+				<div class="hero-unit">
+					<blockquote>
+						<p>Het video beoordelingssysteem van KhanAcademie NL, goed beoordeelde video's komen
+						vanzelf op <a href="http://www.khanacademie.nl/">Khanacademie</a>. Slecht beoordeelde
+						video's krijgen feedback. Je kunt videos beoordelen, en je eigen videos inzenden.
+						<a href="/login">Log in</a> om ook mee te helpen.</p>
+					</blockquote>
+				</div>
+			{% endif %}
+		
+			<noscript>
+				<div class="alert alert-block">
+				<h4 class="alert-heading">JavaScript staat uit!</h4>
+				Zonder JavaScript is VideoTribunal niet te gebruiken!
+				</div>
+			</noscript>
+
 		</div>
-	{% endif %}
-	<noscript>
-		<div class="alert alert-block">
-		<h4 class="alert-heading">JavaScript staat uit!</h4>
-		Zonder JavaScript is VideoTribunal niet te gebruiken!
-		</div>
-	</noscript>
-	<div class="row" ng-app="TreeView" ng-controller="TreeController">
-		<div class="span12">
+	</div>
+
+	<div ng-app="TreeView" ng-controller="TreeController">
+
+	<div class="row">
+
+		<!-- Topic Stack ----------------------->
+		<div class="span10 offset1">
 			<ul class="breadcrumb">
 				<li ng-repeat="data in stack">
 					<a ng-click="resetTopic(data, $index)">{\{ data.name || "Home" }}</a>
 					<span class="divider">/</span>
 				</li>
+			{% if defaults.session %}
+				<li class="pull-right">
+					<a data-toggle="modal" href="#videoModal"class="btn" rel="tooltip" title="Een nieuwe video toevoegen aan het huidige onderdeel"><i class="icon-plus"></i> Video</a>
+					<!--<a data-toggle="modal" href="#topicModal" class="btn" rel="tooltip" title="Een nieuw onderdeel toevoegen onder het huidige onderdeel"><i class="icon-plus"></i> Topic</a>-->
+				</li>
+			{% endif %}
 			</ul>
 		</div>
-		<div class="span3">
-			<ul class="well nav nav-list">
+
+	</div>
+
+	<div class="row">
+
+		<!-- Topic List ------------------------>
+		<div class="span3 offset1">
+			<ul class="well nav nav-list" id="topicList">
 				 <li ng-repeat="data in topics">
 					<a ng-click="setTopic(data)">
 						{\{ data.name }}
@@ -40,8 +71,10 @@
 				</li>
 			</ul>
 		</div>
-		<div class="span9">
-			<ul class="nav nav-list">
+
+		<!-- Video List ------------------------>
+		<div class="span7">
+			<ul class="nav nav-list" id="videoList">
 				<li ng-repeat="data in videos">
 					<a href="/vote?id={\{ data.youtubeId }}" target="_blank">
 						{\{ data.title }}
@@ -49,5 +82,52 @@
 				</li>
 			</ul>
 		</div>
+
 	</div>
+
+	<!-- New Video Modal ----------------------->
+	<div class="modal hide" id="videoModal">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+			<h3>Video Toevoegen</h3>
+		</div>
+		<div class="modal-body">
+			<div class="control-group">
+				<label class="control-label">Onderdeel</label>
+				<div class="controls">
+					<input type="text" class="input-xlarge" disabled="disabled" value="{\{ current }}">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">Youtu.be URL</label>
+				<div class="controls">
+					<input type="text" class="input-xlarge" ng-model="addVideoYoutubeId">
+					<p class="help-block">Ga naar je youtube video, klik onderaan op Share ( of Delen ) en kopieer de <em>hele</em> http://youtu.be/... link.</p>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<a ng-disabled="addVideoStatus == 'loading'" ng-click="addVideo(addVideoYoutubeId)" class="btn btn-primary">Verzenden</a>
+			<div style="margin-top:5px;" class="alert alert-error" ng-show="addVideoStatus == 'error'">
+				{\{ addVideoMessage }}
+			</div>
+			<div style="margin-top:5px;" class="alert alert-success" ng-show="addVideoStatus == 'success'">
+				Video is toegevoegd aan het onderdeel - bekijk de video <a href="{\{ addVideoMessage }}">hier</a>
+			</div>
+		</div>
+	</div>
+
+	<!-- New Topic Modal ----------------------->
+	<div class="modal hide" id="topicModal">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+			<h3>Onderdeel Toevoegen</h3>
+		</div>
+		<div class="modal-body">
+		</div>
+		<div class="modal-footer">
+			<a href="#" class="btn btn-primary">Verzenden</a>
+		</div>
+	</div>
+
 {% endblock %}

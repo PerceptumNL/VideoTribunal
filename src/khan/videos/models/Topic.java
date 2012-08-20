@@ -17,7 +17,7 @@ public class Topic implements Serializable {
 	private String name;
 	// Creation data
 	@Transient
-	private AppUser user;
+	private Key<AppUser> user;
 	private Date created;
 	@Transient
 	private Key<Topic> parent = null;
@@ -30,7 +30,7 @@ public class Topic implements Serializable {
 		return this.name;
 	}
 
-	public AppUser getUser() {
+	public Key<AppUser> getUser() {
 		return this.user;
 	}
 
@@ -41,7 +41,7 @@ public class Topic implements Serializable {
 	public Topic() {
 	}
 
-	public Topic(String name, AppUser user, Key<Topic> parent) {
+	public Topic(String name, Key<AppUser> user, Key<Topic> parent) {
 		this.parent = parent;
 		this.name = name;
 		this.user = user;
@@ -51,7 +51,7 @@ public class Topic implements Serializable {
 	public Topic(String name, AppUser user, Topic parent) {
 		this.parent = parent == null ? null : new Key<Topic>(Topic.class, parent.getName());
 		this.name = name;
-		this.user = user;
+		this.user = user == null ? null : new Key<AppUser>(AppUser.class, user.getId());
 		this.created = Calendar.getInstance().getTime();
 	}
 

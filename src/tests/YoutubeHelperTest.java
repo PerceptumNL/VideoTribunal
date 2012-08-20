@@ -9,7 +9,12 @@ public class YoutubeHelperTest {
 
 	@Test
 	public void testTitle() {
-		assertEquals(YoutubeHelper.getTitle("OoUFWdyJyDk"), "Sifl & Olly - Wizard");
+		assertEquals("Sifl & Olly - Wizard", YoutubeHelper.getTitle("OoUFWdyJyDk"));
 	}
 
+	@Test
+	public void testEmbed() {
+		assertEquals(false, YoutubeHelper.isEmbeddable("Yl5SLKg7dPk"));
+		assertEquals(true, YoutubeHelper.isEmbeddable("3rWFxwo7Phs"));
+	}
 }

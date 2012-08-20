@@ -19,15 +19,6 @@
 	</servlet-mapping>
 
 	<servlet>
-		<servlet-name>SubmitVideo</servlet-name>
-		<servlet-class>khan.videos.servlets.VideoServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>SubmitVideo</servlet-name>
-		<url-pattern>/submit</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
 		<servlet-name>Vote</servlet-name>
 		<servlet-class>khan.videos.servlets.VoteQualityServlet</servlet-class>
 	</servlet>
@@ -42,7 +33,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>OverviewSumitted</servlet-name>
-		<url-pattern>/mytribunal</url-pattern>
+		<url-pattern>/mine</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
@@ -64,6 +55,15 @@
 	</servlet-mapping>
 
 	<servlet>
+		<servlet-name>Admin</servlet-name>
+		<servlet-class>khan.videos.servlets.AdminServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Admin</servlet-name>
+		<url-pattern>/admin</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
 		<servlet-name>Templates</servlet-name>
 		<servlet-class>khan.videos.servlets.templates.TemplateServlet</servlet-class>
 	</servlet>
@@ -75,15 +75,6 @@
 	<welcome-file-list>
 		<welcome-file>overview</welcome-file>
 	</welcome-file-list>
-
-	<security-constraint>
-		<web-resource-collection>
-			<url-pattern>/admin/*</url-pattern>
-		</web-resource-collection>
-		<auth-constraint>
-			<role-name>admin</role-name>
-		</auth-constraint>
-	</security-constraint>
 
 	<servlet>
 		<servlet-name>SystemServiceServlet</servlet-name>

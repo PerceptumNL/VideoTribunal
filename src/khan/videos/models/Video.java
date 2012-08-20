@@ -60,6 +60,10 @@ public class Video implements Serializable {
 		this.status = status;
 	}
 
+	public void setTopic(Key<Topic> topic) {
+		this.topic = topic;
+	}
+
 	public Video(String youtubeId, String submitIPAddress, Key<AppUser> user, Key<Topic> topic, String title) {
 		this.topic = topic;
 		this.youtubeId = youtubeId;

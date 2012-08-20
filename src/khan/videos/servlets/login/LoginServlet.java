@@ -24,7 +24,7 @@ public class LoginServlet extends HttpServlet {
 		UserService userService = UserServiceFactory.getUserService();
 		if (userService.isUserLoggedIn()) {
 			DAO dao = DAO.get();
-			AppUser appUser = dao.loginAppUser(userService.getCurrentUser());
+			AppUser appUser = dao.loginAppUser(userService.getCurrentUser(), userService.isUserAdmin());
 			HttpSession session = req.getSession(true);
 			session.setAttribute("AppUser", appUser);
 			String page = req.getParameter("page");

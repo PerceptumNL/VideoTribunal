@@ -29,7 +29,7 @@ public class VoteQualityServlet extends BaseUserServlet {
 		// Get valid Id
 		String id = req.getParameter("id");
 		if (id == null || id.length() != 11) {
-			resp.sendRedirect("/tribunal");
+			resp.sendRedirect("/");
 			return;
 		}
 		// Load video
@@ -43,7 +43,7 @@ public class VoteQualityServlet extends BaseUserServlet {
 			templater.put("votes", votes);
 			templater.render("vote.html", req, resp);
 		} catch (NotFoundException e) {
-			resp.sendRedirect("/tribunal");
+			resp.sendRedirect("/");
 		}
 	}
 
@@ -91,21 +91,22 @@ public class VoteQualityServlet extends BaseUserServlet {
 		Video video = dao.ofy().find(Video.class, youtubeId);
 		if (video == null) {
 			req.getSession().setAttribute("message", "Je probeerde te reageren op een video die er niet meer is.");
-			resp.sendRedirect("/tribunal");
+			resp.sendRedirect("/");
 			return;
 		}
 		// Check for double vote attempt
 		VoteQuality vote = dao.ofy().find(new Key<VoteQuality>(VoteQuality.class, VoteQuality.buildId(video, user)));
 		if (vote != null) {
 			req.getSession().setAttribute("message", "Je hebt al een reactie op deze video geplaatst.");
-			resp.sendRedirect("/tribunal");
+			resp.sendRedirect("/");
 			return;
 		}
 		// Place vote
 		Boolean accepted = "accepted".equals(status);
 		dao.ofy().put(new VoteQuality(user, video, accepted, comment));
 		req.getSession().setAttribute("message", "Je reactie op de video is opgeslagen, bedankt!");
-		resp.sendRedirect("/tribunal");
+		resp.sendRedirect("/");
 		VoteQualityServlet.runTribunal(video);
 	}
+
 }

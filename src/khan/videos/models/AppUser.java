@@ -8,18 +8,24 @@ public class AppUser implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	public enum Provider {
-		Facebook, Linkedin, Google, Twitter
+	public enum Rank {
+		User, Administrator
 	};
+
+	private Rank rank;
 
 	@Id
 	private String loginProviderId;
 	private Provider loginProvider;
-	// Links to profile
-	private String linkFacebook = null;
-	private String linkGoogle = null;
-	private String linkTwitter = null;
-	private String linkLinkedin = null;
+
+	public enum Provider {
+		Facebook, Linkedin, Google, Twitter
+	};
+
+	private String linkFacebook;
+	private String linkGoogle;
+	private String linkTwitter;
+	private String linkLinkedin;
 
 	public String getLinkFacebook() {
 		return this.linkFacebook;
@@ -61,9 +67,22 @@ public class AppUser implements Serializable {
 		return this.loginProviderId;
 	}
 
+	public Rank getRank() {
+		return this.rank;
+	}
+
+	public void setRank(Rank rank) {
+		this.rank = rank;
+	}
+
 	public AppUser(Provider loginProvider, String loginProviderId) {
+		this.rank = Rank.User;
 		this.loginProvider = loginProvider;
 		this.loginProviderId = loginProviderId;
+		this.linkFacebook = null;
+		this.linkGoogle = null;
+		this.linkTwitter = null;
+		this.linkLinkedin = null;
 	}
 
 	public AppUser() {

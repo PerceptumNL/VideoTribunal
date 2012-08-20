@@ -43,12 +43,13 @@ public class DAO extends DAOBase {
 	// -- AppUser -----------------------------------------
 
 	// TODO: New user creation via providers
-	public AppUser loginAppUser(User gaeuser) {
+	public AppUser loginAppUser(User gaeuser, boolean isAdmin) {
 		AppUser user = ofy().find(AppUser.class, gaeuser.getUserId());
 		if (user == null) {
 			user = new AppUser(AppUser.Provider.Google, gaeuser.getUserId());
 			ofy().put(user);
 		}
+		user.setRank(isAdmin ? AppUser.Rank.Administrator : AppUser.Rank.User);
 		return user;
 	}
 
@@ -115,12 +116,11 @@ public class DAO extends DAOBase {
 	 * @param parent
 	 *            if null: returns videos without parent ( "root videos" )
 	 */
-	// TODO: Test with and without parent
 	@SuppressWarnings("unchecked")
 	public List<Video> getTopicVideos(String parent) {
 		List<Video> children = (List<Video>) memcache.get(DAO.makeTopicVideosKey(parent));
 		if (children == null) {
-			Key<Video> parentKey = parent == null ? null : new Key<Video>(Video.class, parent);
+			Key<Topic> parentKey = parent == null ? null : new Key<Topic>(Topic.class, parent);
 			children = this.ofy().query(Video.class).filter("topic", parentKey).list();
 			if (children == null) {
 				children = new ArrayList<Video>();
@@ -129,5 +129,8 @@ public class DAO extends DAOBase {
 		}
 		return children == null ? new ArrayList<Video>() : children;
 	}
+
+	// -- Topic Tree --------------------------------------
+	// TODO: Topic Tree
 
 }
