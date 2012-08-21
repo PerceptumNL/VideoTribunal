@@ -68,4 +68,11 @@ public class Video implements Serializable {
 	public Video() {
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof Video) {
+			return ((Video) o).getYoutubeId().equals(this.getYoutubeId());
+		}
+		return false;
+	}
 }

@@ -57,6 +57,7 @@ public class VoteTopicServlet extends BaseUserServlet {
 		dao.ofy().put(vote);
 		// TODO: Handle topic change by amount of votes ( ? Topic tribunal )
 		video.setTopic(new Key<Topic>(Topic.class, topicName));
+		dao.unloadVideo(video);
 		dao.addVideo(video);
 		resp.setStatus(HttpServletResponse.SC_OK);
 	}

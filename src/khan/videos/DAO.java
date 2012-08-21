@@ -133,8 +133,14 @@ public class DAO extends DAOBase {
 		return children == null ? new ArrayList<Video>() : children;
 	}
 
-	// -- Topic Tree --------------------------------------
-
-	// TODO: Topic Tree
+	/**
+	 * Removes video from it's topic's list of videos
+	 */
+	public void unloadVideo(Video video) {
+		String parent = video.getTopic().getName();
+		List<Video> children = this.getTopicVideos(parent);
+		children.remove(video);
+		memcache.put(DAO.makeTopicVideosKey(parent), children);
+	}
 
 }
