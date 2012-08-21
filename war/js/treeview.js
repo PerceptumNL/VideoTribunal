@@ -44,14 +44,12 @@ controller('TreeController', ['$scope', function($scope){
 			},
 			success: function(responseText){
 				$scope.$apply(function(){
-					console.log(data);
 					$scope.addVideoMessage = responseText;
 					$scope.addVideoStatus = 'success';
 				});
 			},
 			error: function(data){
 				$scope.$apply(function(){
-					console.log(data);
 					$scope.addVideoMessage = data.getResponseHeader('message');
 					$scope.addVideoStatus = 'error';
 				});
@@ -75,7 +73,6 @@ controller('TreeController', ['$scope', function($scope){
 			},
 			error: function(data){
 				$scope.$apply(function(){
-					console.log(window.data = data);
 					$scope.addTopicMessage = data.getResponseHeader('message');
 					$scope.addTopicStatus = 'error';
 				});
