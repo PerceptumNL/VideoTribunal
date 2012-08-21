@@ -65,7 +65,7 @@
 
 		<!-- Topic List ------------------------>
 		<div class="span3 offset1">
-			<ul class="well nav nav-list" id="topicList">
+			<ul ng-show="topics.length > 0" class="well nav nav-list" id="topicList">
 				<li ng-repeat="data in topics">
 					<a ng-click="setTopic(data)">
 						{\{ data.name }}
@@ -75,11 +75,12 @@
 					<img src="/img/loading.gif"/>
 				</li>
 			</ul>
+			&nbsp;
 		</div>
 
 		<!-- Video List ------------------------>
 		<div class="span7">
-			<ul class="nav nav-list" id="videoList">
+			<ul ng-show="videos.length > 0" class="nav nav-list" id="videoList">
 				<li ng-show="ajaxBufferVideos" style="text-align:center;">
 					<img src="/img/loading.gif"/>
 				</li>
@@ -89,6 +90,7 @@
 					</a>
 				</li>
 			</ul>
+			<p ng-show="videos.length == 0 && current != null">Dit onderdeel bevat nog geen videos</p>
 		</div>
 
 	</div>
