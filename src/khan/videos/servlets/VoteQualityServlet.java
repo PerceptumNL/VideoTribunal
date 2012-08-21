@@ -20,8 +20,8 @@ import com.googlecode.objectify.NotFoundException;
 @SuppressWarnings("serial")
 public class VoteQualityServlet extends BaseUserServlet {
 
-	public static final Integer REQUIRED_VOTES = 4;
-	public static final Double PERCENTAGE_ACCEPT = 0.80;
+	public static final Integer REQUIRED_VOTES = 3;
+	public static final Double PERCENTAGE_ACCEPT = 0.7;
 	public static final Double PERCENTAGE_DENY = 0.6;
 
 	@Override
@@ -63,15 +63,16 @@ public class VoteQualityServlet extends BaseUserServlet {
 				}
 			}
 			Double votePercentage = votesAccept / (votesAccept + votesDenied);
+			Status newStatus = Status.Voting;
 			if (votePercentage > VoteQualityServlet.PERCENTAGE_ACCEPT) {
 				video.setStatus(Status.Accepted);
-				dao.ofy().put(video);
 			} else if (votePercentage < VoteQualityServlet.PERCENTAGE_DENY) {
-				video.setStatus(Status.Denied);
+				newStatus = Status.Denied;
+			}
+			if (newStatus != video.getStatus()) {
+				video.setStatus(newStatus);
 				dao.ofy().put(video);
-			} else {
-				video.setStatus(Status.Voting);
-				dao.ofy().put(video);
+				// TODO: Update video in cache
 			}
 		}
 	}

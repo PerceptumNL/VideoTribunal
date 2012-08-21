@@ -17,6 +17,7 @@ public class AppUser implements Serializable {
 	@Id
 	private String loginProviderId;
 	private Provider loginProvider;
+	private String loginEmail;
 
 	public enum Provider {
 		Facebook, Linkedin, Google, Twitter
@@ -75,8 +76,17 @@ public class AppUser implements Serializable {
 		this.rank = rank;
 	}
 
-	public AppUser(Provider loginProvider, String loginProviderId) {
+	public String getLoginEmail() {
+		return this.loginEmail;
+	}
+
+	public void setLoginEmail(String loginEmail) {
+		this.loginEmail = loginEmail;
+	}
+
+	public AppUser(Provider loginProvider, String loginProviderId, String loginEmail) {
 		this.rank = Rank.User;
+		this.loginEmail = loginEmail;
 		this.loginProvider = loginProvider;
 		this.loginProviderId = loginProviderId;
 		this.linkFacebook = null;

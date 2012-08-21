@@ -19,12 +19,6 @@ public class TopicServlet extends BaseUserServlet {
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		// Load topics
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		String topicName = req.getParameter("topic");
 		List<Topic> topics = DAO.get().getTopicChildren(topicName);
 		// Send as JSON
@@ -37,33 +31,36 @@ public class TopicServlet extends BaseUserServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp, AppUser user) throws IOException {
 		// Check for admin
 		if (user.getRank() != AppUser.Rank.Administrator) {
-			resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Topics toevoegen is momenteel alleen voor admins.");
+			resp.setHeader("message", "Topics toevoegen is momenteel alleen voor admins.");
+			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return;
 		}
 		// Check topic name
 		String topicName = req.getParameter("topicName");
 		String topicNameParent = req.getParameter("topic");
 		if (topicName == null || topicName.length() == 0) {
-			resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Voer een naam in voor het nieuwe onderdeel.");
+			resp.setHeader("message", "Voer een naam in voor het nieuwe onderdeel.");
+			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return;
 		}
 		// Check < and > characters
 		if (topicName.contains("<") || topicName.contains(">")) {
-			resp.sendError(HttpServletResponse.SC_BAD_REQUEST,
-					"\"<\" en \">\" tekens zijn niet toegestaan in onderdeel namen.");
+			resp.setHeader("message", "\"<\" en \">\" tekens zijn niet toegestaan in onderdeel namen.");
+			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return;
 		}
 		// Check for max length
 		if (topicName.length() > 60) {
-			resp.sendError(HttpServletResponse.SC_BAD_REQUEST,
-					"De maximale lengte voor namen van onderdelen is 60 karakters.");
+			resp.setHeader("message", "De maximale lengte voor namen van onderdelen is 60 karakters.");
+			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return;
 		}
 		// Check for double entry
 		DAO dao = DAO.get();
 		Topic existing = dao.ofy().find(Topic.class, topicName);
 		if (existing != null) {
-			resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Er bestaat al een onderdeel met deze naam.");
+			resp.setHeader("message", "Er bestaat al een onderdeel met deze naam.");
+			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return;
 		}
 		// Check if parent topic; if parent topic exists
@@ -71,8 +68,9 @@ public class TopicServlet extends BaseUserServlet {
 		if (topicNameParent != null && topicNameParent.length() > 0) {
 			parent = dao.ofy().find(Topic.class, topicNameParent);
 			if (parent == null) {
-				resp.sendError(HttpServletResponse.SC_BAD_REQUEST,
+				resp.setHeader("message",
 						"Het onderdeel waar je je nieuwe onderdeel aan wilt toevoegen bestaat niet (meer).");
+				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				return;
 			}
 		}

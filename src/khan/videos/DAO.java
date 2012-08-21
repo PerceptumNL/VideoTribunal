@@ -46,7 +46,7 @@ public class DAO extends DAOBase {
 	public AppUser loginAppUser(User gaeuser, boolean isAdmin) {
 		AppUser user = ofy().find(AppUser.class, gaeuser.getUserId());
 		if (user == null) {
-			user = new AppUser(AppUser.Provider.Google, gaeuser.getUserId());
+			user = new AppUser(AppUser.Provider.Google, gaeuser.getUserId(), gaeuser.getEmail());
 			ofy().put(user);
 		}
 		user.setRank(isAdmin ? AppUser.Rank.Administrator : AppUser.Rank.User);
@@ -121,7 +121,7 @@ public class DAO extends DAOBase {
 		List<Video> children = (List<Video>) memcache.get(DAO.makeTopicVideosKey(parent));
 		if (children == null) {
 			Key<Topic> parentKey = parent == null ? null : new Key<Topic>(Topic.class, parent);
-			children = this.ofy().query(Video.class).filter("topic", parentKey).list();
+			children = this.ofy().query(Video.class).filter("topic", parentKey).filter("status", "voting").list();
 			if (children == null) {
 				children = new ArrayList<Video>();
 			}
@@ -131,6 +131,7 @@ public class DAO extends DAOBase {
 	}
 
 	// -- Topic Tree --------------------------------------
+
 	// TODO: Topic Tree
 
 }
