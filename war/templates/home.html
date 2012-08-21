@@ -51,7 +51,7 @@
 			{% if defaults.session %}
 				<li class="pull-right">
 					<a data-toggle="modal" href="#videoModal"class="btn" rel="tooltip" title="Een nieuwe video toevoegen aan het huidige onderdeel"><i class="icon-plus"></i> Video</a>
-					<!--<a data-toggle="modal" href="#topicModal" class="btn" rel="tooltip" title="Een nieuw onderdeel toevoegen onder het huidige onderdeel"><i class="icon-plus"></i> Topic</a>-->
+					<a data-toggle="modal" href="#topicModal" class="btn" rel="tooltip" title="Een nieuw onderdeel toevoegen onder het huidige onderdeel"><i class="icon-plus"></i> Topic</a>
 				</li>
 			{% endif %}
 			</ul>
@@ -124,9 +124,27 @@
 			<h3>Onderdeel Toevoegen</h3>
 		</div>
 		<div class="modal-body">
+			<div class="control-group">
+				<label class="control-label">Onderdeel</label>
+				<div class="controls">
+					<input type="text" class="input-xlarge" disabled="disabled" value="{\{ current }}">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">Onderdeel Naam</label>
+				<div class="controls">
+					<input type="text" class="input-xlarge" ng-model="addTopicName" placeholder="Nieuw onderdeel naam">
+				</div>
+			</div>
 		</div>
 		<div class="modal-footer">
-			<a href="#" class="btn btn-primary">Verzenden</a>
+			<a ng-disabled="addTopicStatus == 'loading'" ng-click="addTopic(addTopicName)" class="btn btn-primary">Verzenden</a>
+			<div style="margin-top:5px;" class="alert alert-error" ng-show="addTopicStatus == 'error'">
+				{\{ addTopicMessage }}
+			</div>
+			<div style="margin-top:5px;" class="alert alert-success" ng-show="addTopicStatus == 'success'">
+				Je nieuwe topic is toegevoegd aan het onderdeel
+			</div>
 		</div>
 	</div>
 

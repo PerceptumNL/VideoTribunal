@@ -43,11 +43,11 @@ public class DAOTest {
 	@Test
 	public void testVideos() {
 		DAO dao = DAO.get();
-		dao.addVideo(new Video("YOUTUBEID0", "127.0.0.1", null, null, "Title"));
-		dao.addVideo(new Video("YOUTUBEID1", "127.0.0.1", null, null, "Title"));
-		dao.addVideo(new Video("YOUTUBEID2", "127.0.0.1", null, null, "Title"));
+		dao.addVideo(new Video("YOUTUBEID0", null, null, "Title"));
+		dao.addVideo(new Video("YOUTUBEID1", null, null, "Title"));
+		dao.addVideo(new Video("YOUTUBEID2", null, null, "Title"));
 		// Add the same video again
-		dao.addVideo(new Video("YOUTUBEID2", "127.0.0.1", null, null, "Title"));
+		dao.addVideo(new Video("YOUTUBEID2", null, null, "Title"));
 		// Videos: Root
 		{
 			List<Video> videos = dao.getTopicVideos(null);

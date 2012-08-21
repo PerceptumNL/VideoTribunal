@@ -15,7 +15,6 @@
 			{% for vote in votes %}
 				{% if vote.comment.length %}
 				<div class="alert alert-info">
-					{{ vote.accepted }}
 					{{ vote.comment }}
 				</div>
 				{% else %}

@@ -19,7 +19,6 @@ public class Video implements Serializable {
 	@Id
 	private String youtubeId;
 	private Date submitted;
-	private String submitIPAddress;
 	private Key<AppUser> user;
 	private Key<Topic> topic;
 	private String title;
@@ -41,10 +40,6 @@ public class Video implements Serializable {
 		return this.submitted;
 	}
 
-	public String getSubmitIPAddress() {
-		return this.submitIPAddress;
-	}
-
 	public Key<AppUser> getUser() {
 		return this.user;
 	}
@@ -61,11 +56,10 @@ public class Video implements Serializable {
 		this.topic = topic;
 	}
 
-	public Video(String youtubeId, String submitIPAddress, Key<AppUser> user, Key<Topic> topic, String title) {
+	public Video(String youtubeId, Key<AppUser> user, Key<Topic> topic, String title) {
 		this.topic = topic;
 		this.youtubeId = youtubeId;
 		this.submitted = Calendar.getInstance().getTime();
-		this.submitIPAddress = submitIPAddress;
 		this.user = user;
 		this.title = title;
 		this.status = Status.Voting;

@@ -76,8 +76,8 @@ public class VideoServlet extends BaseUserServlet {
 			return;
 		}
 		// Success
-		Video video = new Video(youtubeId, req.getRemoteAddr(), new Key<AppUser>(AppUser.class, user.getId()),
-				new Key<Topic>(Topic.class, topicname), title);
+		Video video = new Video(youtubeId, new Key<AppUser>(AppUser.class, user.getId()), new Key<Topic>(Topic.class,
+				topicname), title);
 		dao.addVideo(video);
 		resp.setStatus(HttpServletResponse.SC_OK);
 		resp.getOutputStream().print("/vote?id=" + youtubeId);

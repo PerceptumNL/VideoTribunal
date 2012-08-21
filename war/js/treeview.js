@@ -4,22 +4,27 @@ controller('TreeController', ['$scope', function($scope){
 		$scope.stack.splice(depth, $scope.stack.length - depth);
 		$scope.setTopic(obj);
 	};
+	$scope.setTopicDisabled = false;
 	$scope.setTopic = function(obj){
-		$scope.stack.push(obj);
-		var topic = obj == undefined ? undefined : obj.name;
-		$scope.current = topic;
-		var urlTopic = '/api/topic' + ( topic == undefined ? "" : '?topic=' + topic);
-		$.getJSON(urlTopic, function(cbd){
-			$scope.$apply(function(){
-				$scope.topics = cbd;
+		if($scope.setTopicDisabled == false){
+			$scope.setTopicDisabled = true;
+			$scope.stack.push(obj);
+			var topic = obj == undefined ? undefined : obj.name;
+			$scope.current = topic;
+			var urlTopic = '/api/topic' + ( topic == undefined ? "" : '?topic=' + topic);
+			$.getJSON(urlTopic, function(cbd){
+				$scope.$apply(function(){
+					$scope.topics = cbd;
+					$scope.setTopicDisabled = false;
+				});
 			});
-		});
-		var urlVideo = '/api/video' + ( topic == undefined ? "" : '?topic=' + topic);
-		$.getJSON(urlVideo, function(cbd){
-			$scope.$apply(function(){
-				$scope.videos = cbd;
+			var urlVideo = '/api/video' + ( topic == undefined ? "" : '?topic=' + topic);
+			$.getJSON(urlVideo, function(cbd){
+				$scope.$apply(function(){
+					$scope.videos = cbd;
+				});
 			});
-		});
+		}
 	};
 	$scope.addVideo = function(youtubeId){
 		$scope.addVideoStatus = 'loading';
@@ -40,6 +45,28 @@ controller('TreeController', ['$scope', function($scope){
 				$scope.$apply(function(){
 					$scope.addVideoMessage = data.statusText;
 					$scope.addVideoStatus = 'error';
+				});
+			}
+		});
+	};
+	$scope.addTopic = function(topicName){
+		$scope.addTopicStatus = 'loading';
+		$.ajax({
+			type: 'POST',
+			url: '/api/topic',
+			data: {
+				topicName: topicName,
+				topic: $scope.current
+			},
+			success: function(responseText){
+				$scope.$apply(function(){
+					$scope.addTopicStatus = 'success';
+				});
+			},
+			error: function(data){
+				$scope.$apply(function(){
+					$scope.addTopicMessage = data.statusText;
+					$scope.addTopicStatus = 'error';
 				});
 			}
 		});
