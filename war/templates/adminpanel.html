@@ -9,7 +9,6 @@
 		Seriously <input type="checkbox" name="sure"/>
 		<input class="btn" type="submit" value="Submit"/>
 	</form>
-	<hr/>
 	<p>Recategorize All Videos</p>
 	<form class="form-horizontal" method="POST"/>
 		<input type="hidden" name="action" value="video-recategorize-all"/>
@@ -17,7 +16,6 @@
 		Seriously <input type="checkbox" name="sure"/>
 		<input class="btn" type="submit" value="Submit"/>
 	</form>
-	<hr/>
 	<p>Erase User</p>
 	<form class="form-horizontal" method="POST">
 		<input type="hidden" name="action" value="user-remove-all"/>
@@ -25,7 +23,6 @@
 		Seriously <input type="checkbox" name="sure"/>
 		<input class="btn" type="submit" value="Submit"/>
 	</form>
-	<hr/>
 	<p>Remove User Topics</p>
 	<form class="form-horizontal" method="POST">
 		<input type="hidden" name="action" value="user-remove-topics"/>
@@ -33,11 +30,17 @@
 		Seriously <input type="checkbox" name="sure"/>
 		<input class="btn" type="submit" value="Submit"/>
 	</form>
-	<hr/>
 	<p>Remove User Videos</p>
 	<form class="form-horizontal" method="POST">
 		<input type="hidden" name="action" value="user-remove-videos"/>
 		<input type="text" name="userid" placeholder="userid"/>
+		Seriously <input type="checkbox" name="sure"/>
+		<input class="btn" type="submit" value="Submit"/>
+	</form>
+	<p>Remove Video</p>
+	<form class="form-horizontal" method="POST">
+		<input type="hidden" name="action" value="video-remove"/>
+		<input type="text" name="ytid" placeholder="ytid"/>
 		Seriously <input type="checkbox" name="sure"/>
 		<input class="btn" type="submit" value="Submit"/>
 	</form>

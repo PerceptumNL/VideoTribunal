@@ -75,6 +75,10 @@ public class AdminServlet extends BaseUserServlet {
 			Video video = dao.ofy().find(new Key<Video>(Video.class, ytid));
 			video.setTopic(new Key<Topic>(Topic.class, topic));
 			dao.ofy().put(video);
+		} else if ("video-remove".equals(action)) {
+			String ytid = req.getParameter("ytid");
+			Video video = dao.ofy().find(new Key<Video>(Video.class, ytid));
+			dao.ofy().delete(video);
 		}
 		MemcacheServiceFactory.getMemcacheService().clearAll();
 		req.getSession().setAttribute("message", "Done.");

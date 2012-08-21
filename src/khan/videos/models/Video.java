@@ -5,7 +5,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Id;
-import javax.persistence.Transient;
 
 import com.googlecode.objectify.Key;
 
@@ -20,9 +19,7 @@ public class Video implements Serializable {
 	@Id
 	private String youtubeId;
 	private Date submitted;
-	@Transient
 	private String submitIPAddress;
-	@Transient
 	private Key<AppUser> user;
 	private Key<Topic> topic;
 	private String title;
