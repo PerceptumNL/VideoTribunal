@@ -10,7 +10,6 @@ import com.google.gson.JsonParser;
 
 public class YoutubeHelper {
 
-	// TODO: Check for embeddable
 	public static final String getTitle(String youtubeId) {
 		try {
 			URL url = new URL(String.format("https://gdata.youtube.com/feeds/api/videos/%s?alt=json", youtubeId));
