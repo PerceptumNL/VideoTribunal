@@ -34,6 +34,7 @@ public class Templater {
 			this.defaults.put("message", session.getAttribute("message"));
 			session.removeAttribute("message");
 			this.defaults.put("session", session);
+			this.defaults.put("admin", session.getAttribute("admin"));
 		}
 		this.data.put("defaults", defaults);
 		engine.process(templateFile, this.data, resp.getWriter());

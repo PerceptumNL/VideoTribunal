@@ -51,7 +51,9 @@
 			{% if defaults.session %}
 				<li class="pull-right">
 					<a data-toggle="modal" href="#videoModal"class="btn" rel="tooltip" title="Een nieuwe video toevoegen aan het huidige onderdeel"><i class="icon-plus"></i> Video</a>
-					<a data-toggle="modal" href="#topicModal" class="btn" rel="tooltip" title="Een nieuw onderdeel toevoegen onder het huidige onderdeel"><i class="icon-plus"></i> Topic</a>
+					{% if defaults.admin %}
+						<a data-toggle="modal" href="#topicModal" class="btn" rel="tooltip" title="Een nieuw onderdeel toevoegen onder het huidige onderdeel"><i class="icon-plus"></i> Topic</a>
+					{% endif %}
 				</li>
 			{% endif %}
 			</ul>

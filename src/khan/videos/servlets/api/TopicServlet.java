@@ -35,6 +35,11 @@ public class TopicServlet extends BaseUserServlet {
 
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp, AppUser user) throws IOException {
+		// Check for admin
+		if (user.getRank() != AppUser.Rank.Administrator) {
+			resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Topics toevoegen is momenteel alleen voor admins.");
+			return;
+		}
 		// Check topic name
 		String topicName = req.getParameter("topicName");
 		String topicNameParent = req.getParameter("topic");

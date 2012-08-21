@@ -27,6 +27,7 @@ public class LoginServlet extends HttpServlet {
 			AppUser appUser = dao.loginAppUser(userService.getCurrentUser(), userService.isUserAdmin());
 			HttpSession session = req.getSession(true);
 			session.setAttribute("AppUser", appUser);
+			session.setAttribute("admin", appUser.getRank() == AppUser.Rank.Administrator);
 			String page = req.getParameter("page");
 			if (page == null)
 				page = "/";
