@@ -64,10 +64,13 @@
 		<!-- Topic List ------------------------>
 		<div class="span3 offset1">
 			<ul class="well nav nav-list" id="topicList">
-				 <li ng-repeat="data in topics">
+				<li ng-repeat="data in topics">
 					<a ng-click="setTopic(data)">
 						{\{ data.name }}
 					</a>
+				</li>
+				<li ng-show="ajaxBufferTopics" style="text-align:center;">
+					<img src="/img/loading.gif"/>
 				</li>
 			</ul>
 		</div>
@@ -75,6 +78,9 @@
 		<!-- Video List ------------------------>
 		<div class="span7">
 			<ul class="nav nav-list" id="videoList">
+				<li ng-show="ajaxBufferVideos" style="text-align:center;">
+					<img src="/img/loading.gif"/>
+				</li>
 				<li ng-repeat="data in videos">
 					<a href="/vote?id={\{ data.youtubeId }}" target="_blank">
 						{\{ data.title }}

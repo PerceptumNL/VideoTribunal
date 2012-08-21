@@ -19,6 +19,12 @@ public class TopicServlet extends BaseUserServlet {
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		// Load topics
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		String topicName = req.getParameter("topic");
 		List<Topic> topics = DAO.get().getTopicChildren(topicName);
 		// Send as JSON

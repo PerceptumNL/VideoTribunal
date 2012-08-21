@@ -1,31 +1,39 @@
 angular.module('TreeView', []).
 controller('TreeController', ['$scope', function($scope){
+	// -- Navigate up topics via breadcrumb navigation
 	$scope.resetTopic = function(obj, depth){
 		$scope.stack.splice(depth, $scope.stack.length - depth);
 		$scope.setTopic(obj);
 	};
+	// -- Initialize buffering & disabling variables
+	$scope.ajaxBufferVideos = false;
+	$scope.ajaxBufferTopics = false;
 	$scope.setTopicDisabled = false;
+	// -- Set current Topic handler
 	$scope.setTopic = function(obj){
-		if($scope.setTopicDisabled == false){
-			$scope.setTopicDisabled = true;
-			$scope.stack.push(obj);
-			var topic = obj == undefined ? undefined : obj.name;
-			$scope.current = topic;
-			var urlTopic = '/api/topic' + ( topic == undefined ? "" : '?topic=' + topic);
-			$.getJSON(urlTopic, function(cbd){
-				$scope.$apply(function(){
-					$scope.topics = cbd;
-					$scope.setTopicDisabled = false;
-				});
+		$scope.ajaxBufferVideos = true;
+		$scope.ajaxBufferTopics = true;
+		$scope.topics = [];
+		$scope.videos = [];
+		$scope.stack.push(obj);
+		var topic = obj == undefined ? undefined : obj.name;
+		$scope.current = topic;
+		var urlTopic = '/api/topic' + ( topic == undefined ? "" : '?topic=' + topic);
+		$.getJSON(urlTopic, function(cbd){
+			$scope.$apply(function(){
+				$scope.topics = cbd;
+				$scope.ajaxBufferTopics = false;
 			});
-			var urlVideo = '/api/video' + ( topic == undefined ? "" : '?topic=' + topic);
-			$.getJSON(urlVideo, function(cbd){
-				$scope.$apply(function(){
-					$scope.videos = cbd;
-				});
+		});
+		var urlVideo = '/api/video' + ( topic == undefined ? "" : '?topic=' + topic);
+		$.getJSON(urlVideo, function(cbd){
+			$scope.$apply(function(){
+				$scope.ajaxBufferVideos = false;
+				$scope.videos = cbd;
 			});
-		}
+		});
 	};
+	// -- Add new Video handler
 	$scope.addVideo = function(youtubeId){
 		$scope.addVideoStatus = 'loading';
 		$.ajax({
@@ -49,6 +57,7 @@ controller('TreeController', ['$scope', function($scope){
 			}
 		});
 	};
+	// -- Add new Topic handler
 	$scope.addTopic = function(topicName){
 		$scope.addTopicStatus = 'loading';
 		$.ajax({
@@ -71,6 +80,7 @@ controller('TreeController', ['$scope', function($scope){
 			}
 		});
 	};
+	// -- Initialize
 	$scope.stack = new Array();
 	$scope.setTopic();
 }]);
