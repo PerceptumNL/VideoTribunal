@@ -56,6 +56,8 @@ public class AdminServlet extends BaseUserServlet {
 					.listKeys();
 			dao.ofy().delete(videoList);
 		} else if ("user-remove-topics".equals(action)) {
+			// TODO: Find all videos of topic, and place under root topic's sub
+			// Uncategorized
 			List<Key<Topic>> topicList = dao.ofy().query(Topic.class).filter("user", req.getParameter("userid"))
 					.listKeys();
 			dao.ofy().delete(topicList);

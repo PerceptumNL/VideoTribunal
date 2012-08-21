@@ -8,7 +8,6 @@ controller('TreeController', ['$scope', function($scope){
 	// -- Initialize buffering & disabling variables
 	$scope.ajaxBufferVideos = false;
 	$scope.ajaxBufferTopics = false;
-	$scope.setTopicDisabled = false;
 	// -- Set current Topic handler
 	$scope.setTopic = function(obj){
 		$scope.ajaxBufferVideos = true;

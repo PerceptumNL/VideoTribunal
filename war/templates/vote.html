@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block content %}
-	<div class="row">
+	<div class="row" ng-app="TreeSelect">
 		<div class="span7">
 			<iframe class="blackShadow" width="540" height="360" src="http://www.youtube.com/embed/{{ video.youtubeId }}" frameborder="0" allowfullscreen></iframe>
 			{% for vote in votes %}
@@ -25,28 +25,64 @@
 			{% endfor %}
 		</div>
 		<div class="span4 offset1">
-		  <div id="feedbackForm">
+			<div id="feedbackForm">
 		 	<div class="btn-group" data-toggle="buttons-radio">
-              <button class="btn btn-warning" id="btnOk">Goedkeuren</button>
-			  <button class="btn btn-warning" id="btnNo">Afkeuren</button>
+				<button class="btn btn-warning" id="btnOk">Goedkeuren</button>
+				<button class="btn btn-warning" id="btnNo">Afkeuren</button>
 			</div>
-			<form method="POST">
-		      <div class="control-group">
-                <label class="control-label"></label>
-                <input type="hidden" name="youtubeId" value="{{ video.youtubeId }}"/>
-                <input type="hidden" name="status" id="inpStatus"/>
-                <div class="controls">
-                  <textarea class="input-xlarge" rows="3" name="comment" placeholder="Feedback"></textarea>
-                </div>
-              </div>
-              <input type="submit" class="btn" id="btnSubmit" disabled="" value="Bevestigen"/>
-            </form>
-          </div>
-        </div>
+			<form method="POST" class="form-vertical">
+				<div class="control-group">
+					<label class="control-label"></label>
+					<div class="controls">
+						<textarea class="input-xlarge" rows="3" name="comment" placeholder="Feedback"></textarea>
+					</div>
+				</div>
+				<input type="hidden" name="youtubeId" value="{{ video.youtubeId }}"/>
+				<input type="hidden" name="status" id="inpStatus"/>
+				<input type="submit" class="btn" id="btnSubmit" disabled="" value="Verzenden"/>
+			</form>
+			<hr/>
+			<p>
+				<input type="checkbox" ng-model="topicCheckbox"/> Zit deze video onder het verkeerde onderdeel?
+			</p>
+		 	<div ng-show="topicCheckbox" ng-controller="TreeSelectController">
+				<div class="control-group" ng-hide="updateTopicStatus == 'success'">
+					<label class="control-label">Selecteer hieronder het onderdeel waar de video bij hoort</label>
+					<div class="controls">
+						<input type="hidden" id="youtubeId" value="{{ video.youtubeId }}"/>
+						<ul class="breadcrumb">
+							<li ng-repeat="data in stack">
+								<a ng-click="resetTopic(data, $index)">{\{ data.name || "Home" }}</a>
+								<span class="divider">/</span>
+							</li>
+						</ul>
+						<ul ng-show="topics.length > 0" class="well nav nav-list" id="topicList">
+							<li ng-repeat="data in topics">
+								<a ng-click="setTopic(data)">
+									{\{ data.name }}
+								</a>
+							</li>
+							<li ng-show="ajaxBufferTopics" style="text-align:center;">
+								<img src="/img/loading.gif"/>
+							</li>
+						</ul>
+						<a style="margin-top:3px;" class="btn" ng-disabled="updateTopicStatus == 'loading'" ng-click="updateTopic()">Verzenden</a>
+						<div style="margin-top:5px;" class="alert alert-error" ng-show="updateTopicStatus == 'error'">
+							{\{ updateTopicMessage }}
+						</div>
+					</div>
+				</div>
+				<div style="margin-top:5px;" class="alert alert-success" ng-show="updateTopicStatus == 'success'">
+					Je wijziging is succesvol verzonden.
+				</div>
+			</div>
+		</div>
 	</div>
 {% endblock %}
 
 {% block script %}
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.min.js"></script>
+<script src="/js/treeselect.js"></script>
 <script>
 	$(function(){
 		$('#btnOk').click(function(){

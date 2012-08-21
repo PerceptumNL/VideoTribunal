@@ -55,6 +55,15 @@
 	</servlet-mapping>
 
 	<servlet>
+		<servlet-name>VoteTopicServlet</servlet-name>
+		<servlet-class>khan.videos.servlets.api.VoteTopicServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>VoteTopicServlet</servlet-name>
+		<url-pattern>/api/vote-topic</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
 		<servlet-name>Admin</servlet-name>
 		<servlet-class>khan.videos.servlets.AdminServlet</servlet-class>
 	</servlet>

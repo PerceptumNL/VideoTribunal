@@ -6,8 +6,8 @@ import java.util.List;
 import khan.videos.models.AppUser;
 import khan.videos.models.Topic;
 import khan.videos.models.Video;
-import khan.videos.models.VoteCategory;
 import khan.videos.models.VoteQuality;
+import khan.videos.models.VoteTopic;
 
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
@@ -37,7 +37,7 @@ public class DAO extends DAOBase {
 		ObjectifyService.register(Video.class);
 		ObjectifyService.register(Topic.class);
 		ObjectifyService.register(VoteQuality.class);
-		ObjectifyService.register(VoteCategory.class);
+		ObjectifyService.register(VoteTopic.class);
 	}
 
 	// -- AppUser -----------------------------------------
@@ -66,7 +66,8 @@ public class DAO extends DAOBase {
 		List<Topic> topics = this.getTopicChildren(parentName);
 		for (Topic child : topics) {
 			if (child.getName().equals(topic.getName())) {
-				return;
+				topics.remove(child);
+				break;
 			}
 		}
 		topics.add(topic);
@@ -105,7 +106,8 @@ public class DAO extends DAOBase {
 		// Check if already in list
 		for (Video child : videos) {
 			if (child.getYoutubeId().equals(video.getYoutubeId())) {
-				return;
+				videos.remove(child);
+				break;
 			}
 		}
 		videos.add(video);
@@ -121,7 +123,8 @@ public class DAO extends DAOBase {
 		List<Video> children = (List<Video>) memcache.get(DAO.makeTopicVideosKey(parent));
 		if (children == null) {
 			Key<Topic> parentKey = parent == null ? null : new Key<Topic>(Topic.class, parent);
-			children = this.ofy().query(Video.class).filter("topic", parentKey).filter("status", "voting").list();
+			children = this.ofy().query(Video.class).filter("topic", parentKey).filter("status", Video.Status.Voting)
+					.list();
 			if (children == null) {
 				children = new ArrayList<Video>();
 			}
